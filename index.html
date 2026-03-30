@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Student Registration</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: linear-gradient(to right, #74ebd5, #acb6e5);
+      text-align: center;
+    }
+
+    .form-box {
+      background: white;
+      padding: 25px;
+      width: 320px;
+      margin: auto;
+      margin-top: 60px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    }
+
+    h2 {
+      margin-bottom: 15px;
+    }
+
+    input, select {
+      width: 95%;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      padding: 10px;
+      width: 100%;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #45a049;
+    }
+
+    #msg {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="form-box">
+  <h2>Student Registration</h2>
+
+  <input type="text" id="name" placeholder="Enter Name">
+  <input type="email" id="email" placeholder="Enter Email">
+  <input type="text" id="phone" placeholder="Phone Number">
+
+  <select id="course">
+    <option value="">Select Course</option>
+    <option>CM</option>
+    <option>IT</option>
+    <option>AIML</option>
+  </select>
+
+  <button onclick="validateForm()">Register</button>
+
+  <p id="msg"></p>
+</div>
+
+<script>
+function validateForm() {
+  let name = document.getElementById("name").value.trim();
+  let email = document.getElementById("email").value.trim();
+  let phone = document.getElementById("phone").value.trim();
+  let course = document.getElementById("course").value;
+  let msg = document.getElementById("msg");
+
+  // Patterns
+  let emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+  let phonePattern = /^[0-9]{10}$/;
+  let namePattern = /^[A-Za-z ]+$/;
+
+  // Validation
+  if (name === "" || email === "" || phone === "" || course === "") {
+    msg.innerHTML = "All fields are required!";
+    msg.style.color = "red";
+    return;
+  }
+
+  if (!namePattern.test(name)) {
+    msg.innerHTML = "Name should contain only letters!";
+    msg.style.color = "red";
+    return;
+  }
+
+  if (!emailPattern.test(email)) {
+    msg.innerHTML = "Invalid Email!";
+    msg.style.color = "red";
+    return;
+  }
+
+  if (!phonePattern.test(phone)) {
+    msg.innerHTML = "Enter valid 10-digit phone number!";
+    msg.style.color = "red";
+    return;
+  }
+
+  msg.innerHTML = "Registration Successful!";
+  msg.style.color = "green";
+}
+</script>
+
+</body>
+</html>
