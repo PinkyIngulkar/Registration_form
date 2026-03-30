@@ -14,13 +14,9 @@
       padding: 25px;
       width: 320px;
       margin: auto;
-      margin-top: 60px;
+      margin-top: 50px;
       border-radius: 12px;
       box-shadow: 0 0 15px rgba(0,0,0,0.2);
-    }
-
-    h2 {
-      margin-bottom: 15px;
     }
 
     input, select {
@@ -46,6 +42,11 @@
       background: #45a049;
     }
 
+    .radio-group {
+      text-align: left;
+      margin: 10px 0;
+    }
+
     #msg {
       margin-top: 10px;
       font-weight: bold;
@@ -61,13 +62,21 @@
   <input type="text" id="name" placeholder="Enter Name">
   <input type="email" id="email" placeholder="Enter Email">
   <input type="text" id="phone" placeholder="Phone Number">
+  <input type="text" id="college" placeholder="College Name">
 
   <select id="course">
     <option value="">Select Course</option>
     <option>CM</option>
     <option>IT</option>
     <option>AIML</option>
+    <option>Other</option>
   </select>
+
+  <div class="radio-group">
+    <label>Gender:</label><br>
+    <input type="radio" name="gender" value="Male"> Male
+    <input type="radio" name="gender" value="Female"> Female
+  </div>
 
   <button onclick="validateForm()">Register</button>
 
@@ -79,16 +88,18 @@ function validateForm() {
   let name = document.getElementById("name").value.trim();
   let email = document.getElementById("email").value.trim();
   let phone = document.getElementById("phone").value.trim();
+  let college = document.getElementById("college").value.trim();
   let course = document.getElementById("course").value;
+  let gender = document.querySelector('input[name="gender"]:checked');
   let msg = document.getElementById("msg");
 
   // Patterns
+  let namePattern = /^[A-Za-z ]+$/;
   let emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
   let phonePattern = /^[0-9]{10}$/;
-  let namePattern = /^[A-Za-z ]+$/;
 
   // Validation
-  if (name === "" || email === "" || phone === "" || course === "") {
+  if (name === "" || email === "" || phone === "" || college === "" || course === "" || !gender) {
     msg.innerHTML = "All fields are required!";
     msg.style.color = "red";
     return;
