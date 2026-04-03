@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>Student Registration</title>
+
   <style>
     body {
       font-family: Arial;
@@ -11,40 +12,26 @@
 
     .form-box {
       background: white;
-      padding: 25px;
+      padding: 20px;
       width: 320px;
       margin: auto;
       margin-top: 50px;
-      border-radius: 12px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      border-radius: 10px;
     }
 
     input, select {
       width: 95%;
-      padding: 10px;
+      padding: 8px;
       margin: 8px 0;
-      border-radius: 5px;
-      border: 1px solid #ccc;
     }
 
     button {
-      padding: 10px;
       width: 100%;
-      background: #4CAF50;
+      padding: 10px;
+      background: green;
       color: white;
       border: none;
-      border-radius: 5px;
-      font-size: 16px;
       cursor: pointer;
-    }
-
-    button:hover {
-      background: #45a049;
-    }
-
-    .radio-group {
-      text-align: left;
-      margin: 10px 0;
     }
 
     #msg {
@@ -59,72 +46,80 @@
 <div class="form-box">
   <h2>Student Registration</h2>
 
-  <input type="text" id="name" placeholder="Enter Name">
-  <input type="email" id="email" placeholder="Enter Email">
-  <input type="text" id="phone" placeholder="Phone Number">
-  <input type="text" id="college" placeholder="College Name">
+  <!-- FORM START -->
+  <form action="https://formsubmit.co/pinkyingulkar@gmail.com" method="POST" onsubmit="return validateForm()">
 
-  <select id="course">
-    <option value="">Select Course</option>
-    <option>CM</option>
-    <option>IT</option>
-    <option>AIML</option>
-    <option>Other</option>
-  </select>
+    <!-- hidden (for FormSubmit) -->
+    <input type="hidden" name="_captcha" value="false">
 
-  <div class="radio-group">
-    <label>Gender:</label><br>
+    <input type="text" name="name" id="name" placeholder="Enter Name">
+    <input type="email" name="email" id="email" placeholder="Enter Email">
+    <input type="text" name="phone" id="phone" placeholder="Phone Number">
+    <input type="text" name="college" id="college" placeholder="College Name">
+
+    <select name="course" id="course">
+      <option value="">Select Course</option>
+      <option>CM</option>
+      <option>IT</option>
+      <option>AIML</option>
+      <option>Other</option>
+    </select>
+
+    Gender:<br>
     <input type="radio" name="gender" value="Male"> Male
     <input type="radio" name="gender" value="Female"> Female
-  </div>
 
-  <button onclick="validateForm()">Register</button>
+    <br><br>
 
-  <p id="msg"></p>
+    <button type="submit">Register</button>
+
+    <p id="msg"></p>
+
+  </form>
+  <!-- FORM END -->
+
 </div>
 
 <script>
 function validateForm() {
-  let name = document.getElementById("name").value.trim();
-  let email = document.getElementById("email").value.trim();
-  let phone = document.getElementById("phone").value.trim();
-  let college = document.getElementById("college").value.trim();
+
+  let name = document.getElementById("name").value;
+  let email = document.getElementById("email").value;
+  let phone = document.getElementById("phone").value;
+  let college = document.getElementById("college").value;
   let course = document.getElementById("course").value;
   let gender = document.querySelector('input[name="gender"]:checked');
+
   let msg = document.getElementById("msg");
 
-  // Patterns
-  let namePattern = /^[A-Za-z ]+$/;
-  let emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
-  let phonePattern = /^[0-9]{10}$/;
-
-  // Validation
-  if (name === "" || email === "" || phone === "" || college === "" || course === "" || !gender) {
+  // check empty
+  if (name=="" || email=="" || phone=="" || college=="" || course=="" || !gender) {
     msg.innerHTML = "All fields are required!";
     msg.style.color = "red";
-    return;
+    return false;
   }
 
-  if (!namePattern.test(name)) {
-    msg.innerHTML = "Name should contain only letters!";
-    msg.style.color = "red";
-    return;
-  }
-
-  if (!emailPattern.test(email)) {
+  // email check
+  let emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+  if (!email.match(emailPattern)) {
     msg.innerHTML = "Invalid Email!";
     msg.style.color = "red";
-    return;
+    return false;
   }
 
-  if (!phonePattern.test(phone)) {
-    msg.innerHTML = "Enter valid 10-digit phone number!";
+  // phone check
+  let phonePattern = /^[0-9]{10}$/;
+  if (!phone.match(phonePattern)) {
+    msg.innerHTML = "Enter 10 digit number!";
     msg.style.color = "red";
-    return;
+    return false;
   }
 
+  // success message
   msg.innerHTML = "Registration Successful!";
   msg.style.color = "green";
+
+  return true;
 }
 </script>
 
